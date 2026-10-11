@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>백주은 Service Analyst</title>
+<meta name="description" content="요구사항을 정책과 규칙으로 바꾸고, 그 규칙이 시스템에서 지켜지게 설계하는 백주은의 포트폴리오">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+/* 기존 포트폴리오(gogumajoha/portfolio)의 다크 톤·타이포·카드 문법을 그대로 쓰고 강조색만 바꿨다 */
+:root{
+  --bg:#000;
+  --surface:#111113;
+  --surface-2:#1a1a1d;
+  --line:#2a2a2e;
+  --fg:#f4f4f5;
+  --muted:#9a9aa1;
+  --body:#c9c9cf;
+  --accent:#4c8dff;
+  --accent-soft:rgba(76,141,255,.14);
+  --warn:#ffb020;
+  --stop:#ff5a6e;
+  --font:"Pretendard Variable","Pretendard","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+  --wrap:1120px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px;line-height:1.65;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3,h4{text-wrap:balance;margin:0;letter-spacing:-.03em}
+p{margin:0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--surface-2);border:1px solid var(--line);border-radius:4px;padding:1px 5px;word-break:break-all}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:10;background:linear-gradient(#000 60%,rgba(0,0,0,0));padding-top:env(safe-area-inset-top,0px)}
+.bar .wrap{display:flex;align-items:center;gap:28px;height:64px}
+.logo{font-weight:900;font-size:22px;color:var(--accent);letter-spacing:-.04em;text-decoration:none;flex:none}
+.bar nav{display:flex;gap:22px;overflow-x:auto;scrollbar-width:none;min-width:0}
+.bar nav a{color:var(--muted);text-decoration:none;font-size:15px;font-weight:600;white-space:nowrap}
+.bar nav a:hover{color:var(--fg)}
+
+/* hero */
+.hero{position:relative;padding-block:56px 64px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-20% -10% auto 40%;height:140%;background:radial-gradient(closest-side,rgba(76,141,255,.26),rgba(76,141,255,0));pointer-events:none}
+.hero .wrap{position:relative}
+.badge{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--accent)}
+.badge i{width:8px;height:8px;border-radius:50%;background:var(--accent);display:block}
+.hero h1{font-size:clamp(34px,5.4vw,64px);font-weight:900;line-height:1.08;margin-top:18px;color:var(--accent)}
+.hero h1 span{color:var(--fg);display:block;font-size:.62em;margin-top:12px;line-height:1.25}
+.hero .lead{font-size:clamp(17px,2vw,20px);color:var(--body);margin-top:22px;max-width:36em}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;height:46px;padding-inline:20px;border-radius:6px;font-weight:700;font-size:15px;text-decoration:none;background:var(--surface-2);color:var(--fg);border:1px solid var(--line)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn:hover{filter:brightness(1.12)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:48px}
+.stat{background:var(--bg);padding:20px 22px;min-width:0}
+.stat strong{display:block;font-size:clamp(24px,3.2vw,36px);font-weight:800;color:var(--accent);line-height:1.15;letter-spacing:-.03em}
+.stat span{display:block;color:var(--muted);font-size:13px;margin-top:6px}
+
+/* section heads */
+section{scroll-margin-top:72px}
+.sec{padding-block:56px;border-top:1px solid var(--line)}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:22px}
+.sec-head h2{font-size:clamp(22px,2.6vw,28px);font-weight:800;color:var(--accent)}
+.sec-head p{color:var(--muted);font-size:14px}
+
+/* JD table */
+.jd{width:100%;border-collapse:collapse;font-size:15px}
+.jd th,.jd td{text-align:left;vertical-align:top;padding:14px 16px;border-bottom:1px solid var(--line)}
+.jd thead th{font-size:13px;color:var(--muted);font-weight:700;border-bottom-color:var(--muted)}
+.jd tbody th{font-weight:700;width:30%}
+.jd tbody th small{display:block;color:var(--muted);font-weight:500;font-size:12px;margin-top:2px}
+.jd td{color:var(--body)}
+.jd td:last-child{white-space:nowrap;color:var(--accent);font-weight:700;font-size:14px}
+.jd td a{text-decoration:none}
+.jd td a:hover{text-decoration:underline}
+.note{margin-top:14px;font-size:13px;color:var(--muted)}
+
+/* project detail */
+.proj{padding-block:64px;border-top:1px solid var(--line)}
+.proj-top{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:40px;align-items:start}
+.kicker{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.04em}
+.proj h2{font-size:clamp(30px,4.4vw,46px);font-weight:900;color:var(--accent);margin-top:10px;line-height:1.1}
+.proj h2 small{display:block;font-size:.42em;color:var(--fg);font-weight:600;margin-top:10px;letter-spacing:-.02em}
+.info{display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:18px;font-size:13px;color:var(--muted)}
+.info span{border:1px solid var(--line);border-radius:4px;padding:2px 8px}
+.info span.me{border-color:var(--accent);color:var(--fg)}
+.logline{margin-top:22px;font-size:18px;font-weight:500;max-width:34em}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.links a{font-size:14px;font-weight:600;text-decoration:none;padding:7px 12px;border-radius:5px;background:var(--surface-2);border:1px solid var(--line)}
+.links a:hover{border-color:var(--accent);color:#fff}
+.kpis{display:grid;gap:10px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+.kpi strong{display:block;font-size:28px;font-weight:800;color:var(--accent);line-height:1.2;letter-spacing:-.03em}
+.kpi strong em{font-style:normal;color:var(--muted);font-weight:600;font-size:.6em}
+.kpi span{display:block;font-size:14px;color:var(--muted);margin-top:4px}
+
+/* 문제 → 정책 → 반영 → 결과 */
+.eps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:40px}
+.ep{background:var(--surface);border-radius:10px;padding:22px;min-width:0}
+.ep h3{font-size:14px;font-weight:800;color:var(--accent);letter-spacing:.02em}
+.ep h3 i{font-style:normal;color:var(--muted);margin-right:6px}
+.ep h4{font-size:18px;font-weight:700;margin:8px 0 10px;line-height:1.35}
+.ep p,.ep li{color:var(--body);font-size:15px}
+.ep ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.ep b{color:var(--fg)}
+.jdlink{margin-top:18px;display:flex;gap:12px;align-items:baseline;border-left:3px solid var(--accent);background:var(--accent-soft);padding:12px 16px;border-radius:0 8px 8px 0;font-size:15px}
+.jdlink b{color:var(--accent);white-space:nowrap;font-size:13px}
+
+/* flow diagram */
+.flow{margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px}
+.flow-title{font-size:13px;font-weight:700;color:var(--muted);margin-bottom:14px}
+.steps{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.step{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:8px 12px;font-size:14px;font-weight:600}
+.step.ai{border-color:var(--accent);color:#fff;background:var(--accent-soft)}
+.step.gate{border-style:dashed;border-color:var(--warn);color:var(--warn)}
+.step.stop{border-color:var(--stop);color:var(--stop)}
+.arrow{color:var(--muted);font-size:13px}
+.flow-note{margin-top:14px;font-size:13px;color:var(--muted)}
+.flow-note b{color:var(--fg);font-weight:700}
+.branch{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px;padding-left:12px;border-left:2px solid var(--stop)}
+.branch.warn{border-left-color:var(--warn)}
+
+/* 상태 전이 · 계정 흐름 다이어그램 */
+.sm{display:flex;align-items:stretch;gap:0}
+.node{flex:1 1 0;min-width:0;border:1.5px solid var(--line);border-radius:10px;padding:14px 14px 12px;background:var(--bg)}
+.node b{display:block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;letter-spacing:0;word-break:break-all}
+.node span{display:block;font-size:13px;color:var(--muted);margin-top:6px;line-height:1.45}
+.node.start{flex:0 0 auto;border-style:dashed;align-self:center}
+.node.start b{font-family:var(--font)}
+.node.go{border-color:var(--accent)}
+.node.go b{color:var(--accent)}
+.node.halt{border-color:var(--stop)}
+.node.halt b{color:var(--stop)}
+.node.hold{border-color:var(--warn)}
+.node.hold b{color:var(--warn)}
+.edge{flex:0 0 112px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 6px;text-align:center}
+.edge small{font-size:12px;color:var(--fg);font-weight:600;line-height:1.3}
+.edge .ln{width:100%;height:2px;background:var(--muted);position:relative;margin-top:6px}
+.edge .ln::after{content:"";position:absolute;right:-1px;top:-4px;border:5px solid transparent;border-left:7px solid var(--muted);border-right:0}
+.edge.short{flex-basis:64px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:14px;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;border:1.5px solid;margin-right:6px;vertical-align:-1px}
+
+.stack{margin-top:18px;display:flex;flex-wrap:wrap;gap:6px}
+.stack span{font-size:12px;color:var(--muted);background:var(--surface);border-radius:4px;padding:3px 8px}
+.evidence{margin-top:14px;font-size:13px;color:var(--muted)}
+.evidence summary{cursor:pointer;font-weight:700;color:var(--fg)}
+.evidence ul{margin:10px 0 0;padding-left:18px;display:grid;gap:4px}
+.evidence a{color:var(--muted)}
+.evidence a:hover{color:var(--fg)}
+
+/* compact projects */
+.minis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.mini{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:26px;display:flex;flex-direction:column;gap:12px;min-width:0;scroll-margin-top:72px}
+.mini h3{font-size:24px;font-weight:900;color:var(--accent);line-height:1.2}
+.mini h3 small{display:block;font-size:14px;color:var(--fg);font-weight:600;margin-top:6px;letter-spacing:-.01em}
+.mini p,.mini li{color:var(--body);font-size:15px}
+.mini ol{margin:0;padding-left:20px;display:grid;gap:6px}
+.mini ol li::marker{color:var(--muted);font-size:13px}
+.mini b{color:var(--fg)}
+.mini .hl{display:flex;flex-wrap:wrap;gap:8px 24px;padding-top:12px;border-top:1px solid var(--line);margin-top:auto}
+.mini .hl div strong{display:block;color:var(--accent);font-size:22px;font-weight:800;letter-spacing:-.03em}
+.mini .hl div span{font-size:12px;color:var(--muted)}
+.mini .jdlink{margin-top:0}
+
+/* others + certs */
+.list{display:grid;border-top:1px solid var(--line)}
+.item{display:grid;grid-template-columns:200px minmax(0,1fr);gap:16px;padding:14px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.item b{font-weight:700}
+.item span{color:var(--muted);font-size:14px}
+
+footer{padding-block:56px 72px;border-top:1px solid var(--line)}
+footer h2{font-size:clamp(24px,3.6vw,36px);font-weight:900;color:var(--accent)}
+footer p{color:var(--muted);margin-top:10px}
+.contact{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;align-items:center}
+.contact .mail{font-size:16px;font-weight:700;background:var(--surface-2);border:1px solid var(--line);padding:10px 14px;border-radius:6px;text-decoration:none}
+
+@media (max-width:900px){
+  .proj-top{grid-template-columns:1fr;gap:28px}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .eps{grid-template-columns:1fr}
+  .minis{grid-template-columns:1fr}
+  .sm{flex-direction:column}
+  .node.start{align-self:flex-start}
+  .edge,.edge.short{flex-basis:auto;flex-direction:row;justify-content:flex-start;gap:10px;padding:6px 0 6px 22px}
+  .edge .ln{order:-1;width:2px;height:26px;margin:0}
+  .edge .ln::after{right:-4px;top:auto;bottom:-1px;border:5px solid transparent;border-top:7px solid var(--muted);border-bottom:0}
+}
+@media (max-width:640px){
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stat{padding:16px}
+  .stat strong{font-size:21px}
+  .kpis{grid-template-columns:1fr}
+  .sec-head{flex-direction:column;gap:4px}
+  .item{grid-template-columns:1fr;gap:2px}
+  .jd thead{display:none}
+  .jd,.jd tbody,.jd tr,.jd th,.jd td{display:block;width:100%}
+  .jd tr{padding:14px 0;border-bottom:1px solid var(--line)}
+  .jd th,.jd td{border:0;padding:2px 0}
+  .jd tbody th{width:100%;margin-bottom:4px}
+  .jd td:last-child{white-space:normal;margin-top:4px}
+  .jdlink{flex-direction:column;gap:2px}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="logo" href="#top">JOOEUN</a>
+    <nav aria-label="섹션">
+      <a href="#jd">JD 대응표</a>
+      <a href="#itda">잇다</a>
+      <a href="#before">BEFORE</a>
+      <a href="#more">Cool Spot · 뱅크이즈파인</a>
+      <a href="#paracel">해외 인턴</a>
+      <a href="#certs">자격·교육</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="badge"><i></i>현대오토에버 Enterprise IT · Service Analyst 지원</div>
+      <h1>백주은<span>요구사항을 정책과 규칙으로 바꾸고, 그 규칙이 시스템에서 지켜지게 설계합니다.</span></h1>
+      <p class="lead">동의 상태, 토큰 무효화, 개인정보 차단 기준을 먼저 정했습니다. 그다음 그 기준이 코드와 테스트로 지켜지게 만들었습니다.</p>
+      <div class="btns">
+        <a class="btn primary" href="#jd">JD 대응표 보기</a>
+        <a class="btn" href="mailto:jueun1827@naver.com">jueun1827@naver.com</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong class="tnum">98.2%</strong><span>테스트셋 1,010건 매칭 정확도 (잇다)</span></div>
+        <div class="stat"><strong class="tnum">1만 명</strong><span>토스 미니앱 누적 사용자 (BEFORE)</span></div>
+        <div class="stat"><strong class="tnum">34 → 99%+</strong><span>개인정보 탐지 정확도 (뱅크이즈파인)</span></div>
+        <div class="stat"><strong>1주일 → 수 분</strong><span>후보지 검토 시간 (Cool Spot)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JD 대응표 -->
+  <section id="jd" class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>JD 대응표</h2>
+        <p>임직원 계정 관리 서비스 · Service Analyst 기준</p>
+      </div>
+      <table class="jd">
+        <thead><tr><th scope="col">JD 항목</th><th scope="col">내 경험</th><th scope="col">프로젝트</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">요구사항 → 업무 프로세스·기능 정책<small>필수</small></th>
+            <td>"동의 전에는 기록이 흐르면 안 된다"를 3단계 상태와 전이 규칙으로 정했습니다.</td>
+            <td><a href="#itda">잇다</a> · <a href="#coolspot">Cool Spot</a></td></tr>
+          <tr><th scope="row">IAM(인증·계정·권한) 이해<small>필수</small></th>
+            <td>가입·로그인·토큰 재발급·탈취 시 세션 무효화 흐름을 설계하고 구현했습니다.</td>
+            <td><a href="#before">BEFORE</a></td></tr>
+          <tr><th scope="row">이해관계자 조율<small>필수</small></th>
+            <td>PM으로 AI·BE 사이 입출력 계약을 정했습니다. 3개 팀 인터페이스 규격도 맞췄습니다.</td>
+            <td><a href="#itda">잇다</a> · <a href="#paracel">인턴</a></td></tr>
+          <tr><th scope="row">문서화 · 운영 표준화<small>필수</small></th>
+            <td>기준 문서 → config → 테스트 순서를 규칙으로 정해 문서와 코드가 어긋나지 않게 했습니다.</td>
+            <td><a href="#itda">잇다</a></td></tr>
+          <tr><th scope="row">서비스 아키텍처 · 시스템 연동 검토<small>담당 업무</small></th>
+            <td>pydantic 계약으로 BE와 어긋난 3건을 연동 전에 찾았습니다.</td>
+            <td><a href="#itda">잇다</a> · <a href="#paracel">인턴</a></td></tr>
+          <tr><th scope="row">계정 생애주기<small>우대</small></th>
+            <td>생성 → 활성 → 정지 상태 전이와, 기록을 지우지 않는 철회 정책을 설계했습니다.</td>
+            <td><a href="#itda">잇다</a> · <a href="#before">BEFORE</a></td></tr>
+          <tr><th scope="row">관리자 시스템<small>우대</small></th>
+            <td>AI가 확정하지 못한 건을 담당 교사 확인(REVIEW)으로 보내는 기준을 정했습니다.</td>
+            <td><a href="#itda">잇다</a></td></tr>
+          <tr><th scope="row">개인정보 보호 · 접근권한 관리<small>우대</small></th>
+            <td>기관별 동의 범위, 개인정보 2단 차단, 정규식+LLM 이중 탐지를 설계했습니다.</td>
+            <td><a href="#itda">잇다</a> · <a href="#bank">뱅크이즈파인</a></td></tr>
+        </tbody>
+      </table>
+      <!-- TODO(확인 필요): OAuth 2.0·OIDC·SAML·SSO, RBAC, MFA 행은 넣지 않았다.
+           잇다 BE에 카카오 OAuth(OAuth2ClientConfig.java)와 UserRole.java가 있다. 본인이 직접 맡은 부분인지 확인 후 추가 여부 결정. -->
+      <!-- TODO(확인 필요): 2순위 Solution Architect(M365) 대응 내용이 없다. 넣을 경험이 있는지 확인. -->
+    </div>
+  </section>
+
+  <!-- 1. 잇다 -->
+  <section id="itda" class="proj">
+    <div class="wrap">
+      <div class="proj-top">
+        <div>
+          <div class="kicker">01 · 카카오테크 캠퍼스 4기</div>
+          <h2>잇다<small>기관마다 흩어진 장애아동 돌봄 기록을 보호자 동의 범위 안에서 잇는 서비스</small></h2>
+          <div class="info">
+            <span class="tnum">2026.05 – 진행 중</span><span class="me">PM · 매칭 에이전트 개발</span>
+          </div>
+          <p class="logline">아동 기록은 민감 정보입니다. 기능보다 먼저 "누구의 기록이, 언제, 누구에게 가도 되는가"를 정책으로 정했습니다.</p>
+          <div class="links">
+            <a href="https://github.com/kakaotechcampus-4/ktc4-kyungpook-2" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+        <div class="kpis">
+          <div class="kpi"><strong class="tnum">98.2<em>%</em></strong><span>테스트셋 1,010건 매칭 정확도</span></div>
+          <div class="kpi"><strong class="tnum">3<em>건</em></strong><span>연동 전에 찾은 BE 계약 불일치</span></div>
+        </div>
+      </div>
+
+      <div class="eps">
+        <article class="ep">
+          <h3><i>01</i>문제</h3>
+          <h4>동의 없이 흐르거나, 기록이 사라지면 사고다</h4>
+          <ul>
+            <li>보호자 동의 전에 AI가 기록을 처리하면 안 됩니다.</li>
+            <li>원본 일지에는 진단명·연락처가 섞여 있습니다.</li>
+            <li>AI 확신도는 같은 입력에도 <b>0.72~0.98</b>로 흔들렸습니다.</li>
+          </ul>
+        </article>
+        <article class="ep">
+          <h3><i>02</i>정한 정책 · 규칙</h3>
+          <h4>상태가 처리 여부를 정한다</h4>
+          <ul>
+            <li>아동은 <b>PENDING_CONSENT</b>로 생성합니다. 동의 전에는 파이프라인을 멈춥니다.</li>
+            <li>동의는 기관별로 관리합니다. 원본 일지는 기관을 넘지 않습니다.</li>
+            <li>다른 기관에는 승인된 요약만 인사이트로 공유합니다.</li>
+            <li>철회 시 행을 지우지 않고 <b>REVOKED</b>로 남깁니다. 삭제는 <code>deleted_at</code>으로 표시합니다.</li>
+          </ul>
+        </article>
+        <article class="ep">
+          <h3><i>03</i>시스템에 반영한 방법</h3>
+          <h4>규칙을 코드와 테스트로 고정</h4>
+          <ul>
+            <li>개인정보는 2단으로 막습니다. BLOCK은 요약 이전에 끊습니다.</li>
+            <li>담당자 확인 여부는 확신도가 아닌 <b>구조적 조건</b>으로 정합니다. 후보가 한 명이고 본문에 근거가 있을 때만 자동 확정합니다.</li>
+            <li>기준 문서 → config → 테스트 순서를 지킵니다. 순서가 반대면 기준이 코드를 따라갑니다.</li>
+            <li>입출력 계약을 pydantic으로 고정해 BE와 어긋난 3건을 연동 전에 찾았습니다.</li>
+          </ul>
+        </article>
+        <article class="ep">
+          <h3><i>04</i>결과</h3>
+          <h4>같은 입력에 같은 판정</h4>
+          <ul>
+            <li>테스트셋 1,010건에서 매칭 정확도 <b>98.2%</b>를 얻었습니다.</li>
+            <li>철회 이력이 남아 "누구 정보를 누구에게 줬는지" 추적할 수 있습니다.</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="flow" role="img" aria-label="보호자 동의 상태 전이. 아동 등록 시 PENDING_CONSENT로 시작하고 파이프라인은 정지. 보호자 동의 시 ACTIVE로 바뀌어 파이프라인 가동. 동의 철회 시 SUSPENDED로 바뀌어 파이프라인 정지. 철회된 동의 기록은 REVOKED로 보존하고 물리 삭제하지 않음.">
+        <div class="flow-title">보호자 동의 상태 전이</div>
+        <div class="sm">
+          <div class="node start"><b>아동 등록</b></div>
+          <div class="edge short"><small>기본값</small><div class="ln"></div></div>
+          <div class="node hold"><b>PENDING_CONSENT</b><span>동의 대기 · 파이프라인 정지</span></div>
+          <div class="edge"><small>보호자 동의</small><div class="ln"></div></div>
+          <div class="node go"><b>ACTIVE</b><span>매칭·요약 파이프라인 가동</span></div>
+          <div class="edge"><small>동의 철회</small><div class="ln"></div></div>
+          <div class="node halt"><b>SUSPENDED</b><span>파이프라인 정지 · 동의 행은 REVOKED로 보존</span></div>
+        </div>
+        <p class="flow-note"><b>물리 삭제 대신 <code>deleted_at</code>.</b> 누구 정보를 누구에게 줬는지 기록이 사라지면 안 되기 때문입니다. 예시는 목업이며 실제 아동·기관 정보는 없습니다.</p>
+      </div>
+
+      <div class="flow" role="img" aria-label="개인정보 2단 차단. 원본 일지가 1단 정규식에서 휴대폰·주민번호가 있으면 무조건 BLOCK. 2단 LLM에서 진단명·개인정보 표현은 BLOCK, 확정적·추측성 표현 등은 REVIEW로 교사 확인. 통과한 기록만 요약과 승인을 거쳐 인사이트로 공유.">
+        <div class="flow-title">개인정보 2단 차단 · BLOCK은 요약 이전에 끊는다</div>
+        <div class="steps">
+          <span class="step">원본 일지 (기관 내부)</span><span class="arrow">→</span>
+          <span class="step">1단 정규식</span><span class="arrow">→</span>
+          <span class="step ai">2단 LLM 판단</span><span class="arrow">→</span>
+          <span class="step">요약</span><span class="arrow">→</span>
+          <span class="step gate">승인</span><span class="arrow">→</span>
+          <span class="step">인사이트 공유</span>
+        </div>
+        <div class="branch">
+          <span class="arrow">1단</span><span class="step stop">휴대폰 · 주민번호 → 무조건 BLOCK</span>
+        </div>
+        <div class="branch">
+          <span class="arrow">2단</span><span class="step stop">진단명 · 개인정보 표현 → BLOCK</span>
+        </div>
+        <div class="branch warn">
+          <span class="arrow">2단</span><span class="step gate">확정적 · 추측성 표현 등 → REVIEW (교사 확인)</span>
+        </div>
+        <p class="flow-note">정규식은 LLM 판단 없이 항상 동작합니다. 모델 호출이 실패해도 규칙은 지켜집니다.</p>
+      </div>
+
+      <div class="jdlink"><b>JD 연결</b><span>동의 상태 전이는 계정 생애주기(생성 → 활성 → 정지)와 같은 구조입니다. 기관별 동의 범위는 접근권한 관리와 같은 문제입니다.</span></div>
+
+      <details class="evidence">
+        <summary>근거 파일 (공개 레포)</summary>
+        <ul>
+          <li><a href="https://github.com/kakaotechcampus-4/ktc4-kyungpook-2/blob/develop/backend/src/main/java/com/itda/backend/domain/ChildStatus.java" target="_blank" rel="noopener">backend/…/domain/ChildStatus.java</a> — PENDING_CONSENT · ACTIVE · SUSPENDED</li>
+          <li><a href="https://github.com/kakaotechcampus-4/ktc4-kyungpook-2/blob/develop/backend/src/main/java/com/itda/backend/repository/ChildRepository.java" target="_blank" rel="noopener">backend/…/repository/ChildRepository.java</a> — ACTIVE 아동만 매칭 명부에 포함, deletedAt 조건</li>
+          <li><a href="https://github.com/kakaotechcampus-4/ktc4-kyungpook-2/blob/develop/AI/validation/config.py" target="_blank" rel="noopener">AI/validation/config.py</a> — BLOCK · REVIEW 등급, 정규식 항상 BLOCK</li>
+          <li><a href="https://github.com/kakaotechcampus-4/ktc4-kyungpook-2/blob/develop/AI/matching/CRITERIA.md" target="_blank" rel="noopener">AI/matching/CRITERIA.md</a> — 자동 확정 4조건, 확신도 0.72~0.98 기록</li>
+          <li><a href="https://github.com/kakaotechcampus-4/ktc4-kyungpook-2/blob/develop/AI/README.md" target="_blank" rel="noopener">AI/README.md</a> — 문서를 먼저 고치고 코드를 맞추는 규칙</li>
+          <li><a href="https://github.com/kakaotechcampus-4/ktc4-kyungpook-2/blob/develop/AI/matching/schemas.py" target="_blank" rel="noopener">AI/matching/schemas.py</a> — pydantic 입출력 계약</li>
+        </ul>
+        <!-- TODO(확인 필요): 동의 행 REVOKED 보존 로직은 develop 브랜치 backend/src/main 에서 찾지 못했다. 근거 경로 확인 필요. -->
+        <!-- TODO(확인 필요): 98.2%(1,010건), BE 계약 불일치 3건의 근거 파일 경로. -->
+      </details>
+      <div class="stack"><span>LangGraph</span><span>FastAPI</span><span>Pydantic</span><span>Spring Boot</span><span>PostgreSQL</span></div>
+    </div>
+  </section>
+
+  <!-- 2. BEFORE -->
+  <section id="before" class="proj">
+    <div class="wrap">
+      <div class="proj-top">
+        <div>
+          <div class="kicker">02 · 산학협력 (주)인비고웍스</div>
+          <h2>BEFORE<small>미국주식 하방 리스크를 먼저 보여주는 서비스</small></h2>
+          <div class="info">
+            <span class="me">백엔드 · 인증 · 계정 관리</span><span>토스 미니앱 출시</span>
+          </div>
+          <p class="logline">투자 정보 서비스라 면책 동의 없는 계정은 존재하면 안 됩니다. 토큰이 탈취되면 그 세션을 한 번에 끊을 수 있어야 했습니다.</p>
+          <div class="links">
+            <a href="https://github.com/JusikCool/ZERi-server" target="_blank" rel="noopener">GitHub · Server</a>
+          </div>
+        </div>
+        <div class="kpis">
+          <div class="kpi"><strong class="tnum">1만<em>명</em></strong><span>토스 미니앱 누적 사용자</span></div>
+          <div class="kpi"><strong>최우수상</strong><span>산학협력 경진대회 · SW 저작권 등록</span></div>
+        </div>
+      </div>
+
+      <div class="eps">
+        <article class="ep">
+          <h3><i>01</i>문제</h3>
+          <h4>계정과 동의가 따로 놀면 안 된다</h4>
+          <ul>
+            <li>가입은 됐는데 면책 동의가 빠진 계정이 생길 수 있었습니다.</li>
+            <li>Refresh 토큰이 탈취되면 공격자 세션을 끊을 방법이 없었습니다.</li>
+            <li>장애 원인을 한곳에서 추적할 수단이 필요했습니다.</li>
+          </ul>
+        </article>
+        <article class="ep">
+          <h3><i>02</i>정한 정책 · 규칙</h3>
+          <h4>가입 = 동의, 재사용 = 탈취</h4>
+          <ul>
+            <li>가입과 면책 동의는 함께 성공하거나 함께 실패합니다.</li>
+            <li>Refresh 토큰은 한 번만 씁니다. 폐기된 토큰이 다시 오면 탈취로 봅니다.</li>
+            <li>탈취가 의심되면 그 로그인에서 나온 세션을 모두 끊습니다.</li>
+            <li>비밀번호는 Argon2 해시로만 저장합니다.</li>
+          </ul>
+        </article>
+        <article class="ep">
+          <h3><i>03</i>시스템에 반영한 방법</h3>
+          <h4>트랜잭션과 토큰 family</h4>
+          <ul>
+            <li>users와 disclaimer_acks INSERT를 <b>한 트랜잭션</b>으로 묶었습니다.</li>
+            <li>JWT Refresh Rotation에 <b>family_id</b>를 붙여 일괄 무효화를 구현했습니다.</li>
+            <li>ELK로 로그를 중앙화해 장애 원인을 추적했습니다.</li>
+            <li>알림 단계를 분리해 다른 단계 장애가 번지지 않게 했습니다.</li>
+          </ul>
+          <!-- TODO(확인 필요): ELK 구성 근거가 ZERi-server 레포에 없다. 인프라 레포 경로 확인 필요. -->
+        </article>
+        <article class="ep">
+          <h3><i>04</i>결과</h3>
+          <h4>출시하고 1만 명이 썼다</h4>
+          <ul>
+            <li>토스 미니앱으로 출시해 누적 사용자 <b>1만 명</b>을 넘었습니다.</li>
+            <li>SW 저작권을 등록했습니다.</li>
+            <li>산학협력 경진대회에서 최우수상을 받았습니다.</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="flow" role="img" aria-label="BEFORE 계정 흐름. 가입 시 사용자와 면책 동의를 한 트랜잭션으로 저장하고 비밀번호는 Argon2. 로그인 시 Access와 Refresh 토큰을 새 family로 발급. 재발급 시 이전 Refresh를 폐기하고 같은 family로 새 토큰 발급. 폐기된 Refresh가 다시 들어오면 탈취로 보고 family 전체를 무효화하고 재로그인을 요구.">
+        <div class="flow-title">계정 흐름 · 가입 → 로그인 → 재발급 → 탈취 시 무효화</div>
+        <div class="sm">
+          <div class="node go"><b>가입</b><span>users + 면책 동의 한 트랜잭션 · Argon2</span></div>
+          <div class="edge short"><div class="ln"></div></div>
+          <div class="node go"><b>로그인</b><span>Access · Refresh 발급 · 새 family</span></div>
+          <div class="edge short"><div class="ln"></div></div>
+          <div class="node go"><b>재발급</b><span>이전 Refresh 폐기 · 같은 family로 회전</span></div>
+          <div class="edge"><small>폐기된 토큰 재사용</small><div class="ln"></div></div>
+          <div class="node halt"><b>family 무효화</b><span>같은 로그인의 세션 일괄 종료 · 재로그인 필요</span></div>
+        </div>
+        <div class="legend"><span><i style="border-color:var(--accent)"></i>정상 흐름</span><span><i style="border-color:var(--stop)"></i>탈취 대응</span></div>
+      </div>
+
+      <div class="jdlink"><b>JD 연결</b><span>계정 생성 시 필수 동의를 함께 기록하고, 세션 생애주기를 정책으로 끊는 구조입니다.</span></div>
+
+      <details class="evidence">
+        <summary>근거 파일 (공개 레포)</summary>
+        <ul>
+          <li><a href="https://github.com/JusikCool/ZERi-server/blob/develop/app/services/auth_service.py" target="_blank" rel="noopener">app/services/auth_service.py</a> — 가입·면책 동의 한 트랜잭션, family 일괄 무효화</li>
+          <li><a href="https://github.com/JusikCool/ZERi-server/blob/develop/app/db/models/refresh_token.py" target="_blank" rel="noopener">app/db/models/refresh_token.py</a> — family_id</li>
+          <li><a href="https://github.com/JusikCool/ZERi-server/blob/develop/app/core/security.py" target="_blank" rel="noopener">app/core/security.py</a> — Argon2</li>
+        </ul>
+      </details>
+      <div class="stack"><span>FastAPI</span><span>PostgreSQL</span><span>JWT</span><span>Argon2</span><span>ELK</span></div>
+    </div>
+  </section>
+
+  <!-- 3~4. 압축 프로젝트 -->
+  <section id="more" class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>역할과 통제를 나눈 프로젝트</h2>
+        <p>문제 → 정책 → 반영 → 결과</p>
+      </div>
+      <div class="minis">
+
+        <article class="mini" id="coolspot">
+          <div class="kicker">03 · Google Cloud AI Agent Challenge</div>
+          <h3>Cool Spot<small>설치 후보지 검토 지원 AI 에이전트</small></h3>
+          <!-- TODO(확인 필요): 기간, 팀 구성, 본인 역할, 서비스 한 줄 설명, 링크 -->
+          <ol>
+            <li><b>문제:</b> 담당자가 후보지를 검토하는 데 1주일이 걸렸습니다.</li>
+            <li><b>정책:</b> 추천은 AI가 합니다. 설치 여부와 예산 배분은 담당자가 정합니다.</li>
+            <li><b>반영:</b> 담당자 업무 흐름을 분석해 AI 단계와 결정 단계를 나눴습니다.</li>
+            <li><b>결과:</b> 후보지 검토가 1주일에서 수 분으로 줄었습니다.</li>
+          </ol>
+          <div class="hl">
+            <div><strong>1주일 → 수 분</strong><span>후보지 검토 시간</span></div>
+          </div>
+          <div class="jdlink"><b>JD 연결</b><span>누가 무엇을 결정하는지 나누는 일은 권한 정책 설계와 같습니다.</span></div>
+        </article>
+
+        <article class="mini" id="bank">
+          <div class="kicker">04 · iM뱅크 지정주제 해커톤</div>
+          <h3>뱅크이즈파인<small>금융권 업무 문서 개인정보 탐지 · n8n 자동화 · React</small></h3>
+          <!-- TODO(확인 필요): 기존 포트폴리오의 팀명은 "아임파인뱅크앤유". 표기 통일 여부 확인. -->
+          <ol>
+            <li><b>문제:</b> 업무 문서 속 개인정보를 빠짐없이 걸러내야 했습니다.</li>
+            <li><b>정책:</b> 형식이 정해진 정보는 정규식으로, 문맥 판단은 LLM으로 나눴습니다.</li>
+            <li><b>반영:</b> n8n 워크플로우 5개로 탐지·마스킹·알림을 자동화했습니다. 처리 단계마다 로그를 남겼습니다.</li>
+            <li><b>결과:</b> 탐지 정확도가 34%에서 99% 이상으로 올랐습니다.</li>
+          </ol>
+          <div class="hl">
+            <div><strong class="tnum">34 → 99%+</strong><span>탐지 정확도</span></div>
+            <div><strong>최우수상</strong><span>iM뱅크 지정주제</span></div>
+          </div>
+          <div class="jdlink"><b>JD 연결</b><span>개인정보 보호 정책을 자동 통제로 옮겼습니다. 단계별 로그는 감사 추적 역할을 합니다.</span></div>
+        </article>
+
+        <article class="mini" id="paracel">
+          <div class="kicker">05 · Paracel Technology Solutions (베트남) · AI 파트 인턴</div>
+          <h3>3개 팀 인터페이스 규격<small>Embedded · SLAM · AI</small></h3>
+          <p>Embedded·SLAM·AI 세 팀의 모듈이 맞물려 동작해야 했습니다. 팀 사이 인터페이스 규격을 정했습니다.</p>
+          <div class="jdlink"><b>JD 연결</b><span>서로 다른 시스템의 연동 지점을 먼저 정의한 경험입니다.</span></div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="others" class="sec">
+    <div class="wrap">
+      <div class="sec-head"><h2>기타 프로젝트</h2></div>
+      <div class="list">
+        <div class="item"><b>철강 표면 결함 탐지</b><span>YOLOv8 기반 결함 탐지</span></div>
+        <div class="item"><b>BEANKONG</b><span>기타 프로젝트</span></div>
+        <!-- TODO(확인 필요): BEANKONG 한 줄 설명 -->
+      </div>
+    </div>
+  </section>
+
+  <section id="certs" class="sec">
+    <div class="wrap">
+      <div class="sec-head"><h2>자격 · 교육</h2></div>
+      <div class="list">
+        <div class="item"><b>SQLD</b><span>SQL 개발자</span></div>
+        <div class="item"><b>ADsP</b><span>데이터분석 준전문가</span></div>
+        <div class="item"><b>카카오테크 캠퍼스 4기</b><span>잇다 PM · 매칭 에이전트 개발</span></div>
+        <div class="item"><b>Google Cloud AI Agent Challenge</b><span>Cool Spot</span></div>
+        <div class="item"><b>NVIDIA DLI</b><span>Rapid Application Development with LLMs</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <h2>정책이 지켜지는 시스템을 만들겠습니다.</h2>
+    <p>임직원 계정의 생성부터 정지까지, 규칙이 빠짐없이 적용되게 설계하고 싶습니다.</p>
+    <div class="contact">
+      <a class="mail" href="mailto:jueun1827@naver.com">jueun1827@naver.com</a>
+      <a class="btn" href="https://github.com/gogumajoha" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
